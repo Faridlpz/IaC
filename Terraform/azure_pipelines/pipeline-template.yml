@@ -1,0 +1,47 @@
+# archivo yml para la creaci�n de namespaces
+parameters:
+  - name: environment
+    displayName: Environment
+    default: dev
+    # do NOT change these values, they are used internally on "if" conditions
+    values: ['dev']
+
+trigger: none
+
+resources:
+  repositories:
+    - repository: insertValue
+      type: bitbucket
+      endpoint: insertValue
+      name: insertValue
+      ref: insertValue
+
+stages:
+  - stage: Terraform
+    variables:
+      - group: azure_pipelines_terraform
+    pool:
+      vmImage: 'ubuntu-22.04'
+    jobs:
+    - job: Terraform_state
+      workspace:
+        clean: all
+      steps:
+        - checkout: insertValue
+        - checkout: self
+          persistCredentials: true
+
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: insertValue
+            scriptType: 'bash'
+            scriptLocation: 'inlineScript'
+            inlineScript: |
+              export AZDO_ORG_SERVICE_URL=${AZUREDEVOPS_PROVIDER_DEVOPS_URL}
+              export AZDO_PERSONAL_ACCESS_TOKEN=${AZUREDEVOPS_PROVIDER_PERSONAL_ACCESS_TOKEN}
+              export ARM_ACCESS_KEY=${AZURERM_BACKEND_ACCESS_KEY}
+              cd $(Build.SourcesDirectory)/insertValue
+
+              terraform init
+              terraform plan
+              terraform apply -auto-approve

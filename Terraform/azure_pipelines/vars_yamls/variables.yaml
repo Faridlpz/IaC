@@ -1,0 +1,11 @@
+build_definitions:
+  build1:
+    ci_trigger_exclude_branches: insertValue # []
+    pull_request_trigger_use_yaml: insertValue #Bool true
+    pull_request_trigger_forks_enabled: insertValue #Bool false
+    pull_request_trigger_forks_share_secrets: #Bool false
+    pipeline_name: insertValue
+    pipeline_folder: insertValue # \test
+    repo: insertValue
+    branch_name: insertValue
+    ci_trigger: insertValue #["feature/*", "main"]

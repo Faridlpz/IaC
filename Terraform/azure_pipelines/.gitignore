@@ -1,0 +1,17 @@
+# Local .terraform directories
+**/.terraform/*
+
+# Ignore override files as they are usually used to override resources locally and so
+# are not checked in
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include .terraform.lock.hcl to ensure consistent provider versions across different workstations
+# But if you're developing a shared Terraform module, you might exclude it
+# .terraform.lock.hcl
+
+# .tfstate files can include sensitive data and should not be checked into version control
+*.tfstate
+*.tfstate.*
